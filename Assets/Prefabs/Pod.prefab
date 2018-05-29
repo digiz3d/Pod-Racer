@@ -207,7 +207,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maxSpeed: 200
-  timeToFullspeed: 7
+  timeToFullspeed: 8
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -234,7 +234,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   currentSpeed: 0
   maxTurnSpeed: 70
-  turnSpeedFactor: 90
+  turnSpeedFactor: 1
   turnOppositeMultiplier: 6
   currentTurnSpeed: 0
   resetTurnFactor: 3

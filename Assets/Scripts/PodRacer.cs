@@ -22,7 +22,7 @@ public class PodRacer : MonoBehaviour
     private float speedFactor = 0f;
     public float currentSpeed = 0f;                                 // unit/second
     private Dictionary<int, float> speedCurveApproximation;         // key = speed in m/s , value = factor from 0f to 1f;
-    private float speedCurveApproximationPrecision = 0.01f;         // lower =  more accurate speeds but slower loading times
+    private float speedCurveApproximationPrecision = 0.0001f;       // lower =  more accurate speeds but slower loading times
 
     private Vector3 forwardVector;
 
@@ -31,15 +31,11 @@ public class PodRacer : MonoBehaviour
     #region Turn settings
 
     public float maxTurnSpeed = 70f;
-    public float turnSpeedFactor = 90f;
+    public float turnSpeedFactor = 1f;
     public float turnOppositeMultiplier = 6f;                       // can be used for smoothing left/right transition
     public float currentTurnSpeed = 0f;
 
     public float resetTurnFactor = 3f;
-
-    private float visualRotSpeed = 0.02f;
-    private float maxRotAngle = 50f;
-    private float currentRotAngle = 0f;
 
     #endregion
 
@@ -122,12 +118,12 @@ public class PodRacer : MonoBehaviour
 
         if (left)
         {
-            currentTurnSpeed -= (currentTurnSpeed > 0) ? Time.deltaTime * turnSpeedFactor * turnOppositeMultiplier : Time.deltaTime * turnSpeedFactor;
+            currentTurnSpeed -= (currentTurnSpeed > 0) ?  turnSpeedFactor * turnOppositeMultiplier :  turnSpeedFactor;
             currentTurnSpeed = Mathf.Clamp(currentTurnSpeed, -maxTurnSpeed, maxTurnSpeed);
         }
         if (right)
         {
-            currentTurnSpeed += (currentTurnSpeed < 0) ? Time.deltaTime * turnSpeedFactor * turnOppositeMultiplier : Time.deltaTime * turnSpeedFactor;
+            currentTurnSpeed += (currentTurnSpeed < 0) ?  turnSpeedFactor * turnOppositeMultiplier :  turnSpeedFactor;
             currentTurnSpeed = Mathf.Clamp(currentTurnSpeed, -maxTurnSpeed, maxTurnSpeed);
         }
         if (!left && !right)
@@ -136,7 +132,6 @@ public class PodRacer : MonoBehaviour
         }
 
         #endregion
-
 
         transform.position += transform.forward * (currentSpeed * Time.deltaTime);
         transform.localRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (currentTurnSpeed * Time.deltaTime), transform.eulerAngles.z);
